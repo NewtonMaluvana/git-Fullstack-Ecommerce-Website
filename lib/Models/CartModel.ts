@@ -22,12 +22,12 @@ const oderSchema = new mongoose.Schema(
         price: { type: Number, required: true },
       },
     ],
-    shippingAdress: {
+    ShippingAddress: {
       fullName: { type: String, required: true },
       address: { type: String, required: true },
       city: { type: String, required: true },
       postalCode: { type: Number, required: true },
-      country: { type: Number, required: true },
+      country: { type: String, required: true },
     },
 
     paymentMethod: { type: String, required: true },
@@ -53,7 +53,7 @@ export type Order = {
   _id: string;
   user?: { name: string };
   items: [OderItem];
-  shippingADDRESS: {
+  ShippingAddress: {
     fullName: string;
     address: string;
     city: string;
@@ -67,11 +67,11 @@ export type Order = {
   shippingPrice: number;
   taxPrice: number;
   totalPrice: number;
-  isPaid: boolean;
+  isPaid?: boolean;
   isDelivered: boolean;
   paidAt?: string;
   deliveredAt?: string;
-  createdAt: string;
+  createdAt?: string;
 };
 export type OderItem = {
   id: string;

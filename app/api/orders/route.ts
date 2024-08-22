@@ -61,7 +61,7 @@ export const POST = auth(async (req: any) => {
     return Response.json(
       {
         message: "Order created",
-        order: createOrder,
+        Order: createOrder,
       },
       {
         status: 201,

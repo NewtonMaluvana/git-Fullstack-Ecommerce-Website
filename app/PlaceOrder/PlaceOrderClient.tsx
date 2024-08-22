@@ -63,8 +63,8 @@ const PlaceOrderClient = () => {
   }, []);
   return (
     <div className=" p-6">
-      <div className="flex gap-2 ">
-        <div className="col-span-8 gap-4  flex flex-col w-[80%]">
+      <div className="flex md:flex-row flex-col  gap-2 ">
+        <div className="col-span-8 gap-4  flex flex-col w-[100%]">
           <section className="flex  text-white rounded-md text-xl flex-col gap-2 justify-center p-4 w-full bg-slate-600">
             <h1 className="text-2xl">Shipping Adress</h1>
             <p>{Shipaddress.fullName}</p>
@@ -117,7 +117,7 @@ const PlaceOrderClient = () => {
         </div>
         <div className="col-span-4 w-full bg-slate-800 h-[300px] p-2 rounded-md flex flex-col justify-center gap-4 mx-auto text-white">
           <h1 className="text-3xl">Order Summary</h1>
-          <ul>
+          <ul className="text-xl">
             <li className="flex justify-between">
               <span>Items</span> <span>R {itemsPrice}</span>
             </li>
@@ -131,13 +131,14 @@ const PlaceOrderClient = () => {
               <span>Total</span> <span>R {totalPrice}</span>
             </li>
           </ul>
-
-          <button
-            onClick={() => placeOrder()}
-            className=" md:w-[200px] w-min-[50px] w-[70px]  rounded-md p-2 bg-purple-800 text-white"
-          >
-            Place Order
-          </button>
+          <div className="flex justify-center items-center">
+            <button
+              onClick={() => placeOrder()}
+              className=" md:w-[250px] w-min-[50px] w-[200px]  rounded-md py-4 p-2 bg-purple-800 text-white"
+            >
+              Place Order
+            </button>
+          </div>
         </div>
       </div>
     </div>

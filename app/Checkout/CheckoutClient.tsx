@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import Button from "../Components/Button";
 import { FaAddressBook, FaCheck } from "react-icons/fa";
 import Inputs from "../Components/Forms/Inputs";
+import { useSession } from "next-auth/react";
 
 const CheckoutClient = () => {
   const router = useRouter();
@@ -73,6 +74,10 @@ const CheckoutClient = () => {
       )}
     </div>
   );
+  const { data: session } = useSession();
+  if (!session) {
+    return <p className="text-center ">Already logged in Redirecting.....</p>;
+  }
   return (
     <div className="m-2 p-4 w-full z-[2] rounded-md bg-slate-800">
       <h1 className="text-center  text-3xl font-semibold text-purple-600 ">

@@ -32,7 +32,7 @@ export default function ClientProvider({
         fetcher: async (resource, init) => {
           const res = await fetch(resource, init);
           if (!res.ok) {
-            throw new Error("an error has occured fecthing data");
+            throw new Error("an error occured fecthing data");
           }
           return res.json();
         },

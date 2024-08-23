@@ -10,7 +10,7 @@ type Cart = {
   taxPrice: number;
   shippingPrice: number;
   totalPrice: number;
-  paymentMethod: string;
+  paymentmethod: string;
   Shipaddress: ShippingAddress;
 };
 const initialState: Cart = {
@@ -19,7 +19,7 @@ const initialState: Cart = {
   taxPrice: 0,
   shippingPrice: 0,
   totalPrice: 0,
-  paymentMethod: "PayPal",
+  paymentmethod: "PayPal",
   Shipaddress: {
     fullName: "",
     address: "",
@@ -42,7 +42,7 @@ export default function CartService() {
     taxPrice,
     shippingPrice,
     totalPrice,
-    paymentMethod,
+    paymentmethod,
     Shipaddress,
   } = cartStore();
 
@@ -52,7 +52,7 @@ export default function CartService() {
     taxPrice,
     shippingPrice,
     totalPrice,
-    paymentMethod,
+    paymentmethod,
     Shipaddress,
     increase: (item: OderItem) => {
       const ExistItem = items.find((e) => e.id === item.id);
@@ -77,9 +77,9 @@ export default function CartService() {
         Shipaddress,
       });
     },
-    getPaymentMethod: (paymentMethod: string) => {
+    getPaymentMethod: (paymentmethod: string) => {
       cartStore.setState({
-        paymentMethod,
+        paymentmethod,
       });
     },
     decrease: (item: OderItem) => {

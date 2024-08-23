@@ -12,14 +12,13 @@ const PlaceOrderClient = () => {
   const router = useRouter();
   const {
     items,
-    paymentMethod,
+    paymentmethod,
     clear,
     Shipaddress,
     totalPrice,
     taxPrice,
     shippingPrice,
     itemsPrice,
-    del,
   } = CartService();
 
   const { trigger: placeOrder, isMutating: isPlacing } = useSWRMutation(
@@ -31,13 +30,7 @@ const PlaceOrderClient = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items,
-          itemsPrice,
-          shippingPrice,
-          totalPrice,
-          taxPrice,
-          Shipaddress,
-          paymentMethod,
+          paymentmethod,
         }),
       });
 
@@ -54,12 +47,12 @@ const PlaceOrderClient = () => {
   );
 
   useEffect(() => {
-    if (!paymentMethod) {
+    if (!paymentmethod) {
       return router.push("/Payment");
     }
-    if (items.length === 0) {
-      return router.push("/");
-    }
+    // if (items.length === 0) {
+    //   return router.push("/");
+    // }
   }, []);
   return (
     <div className=" p-6">
@@ -78,7 +71,7 @@ const PlaceOrderClient = () => {
           </section>
           <section className="flex  text-white rounded-md text-xl flex-col gap-2 justify-center p-4 w-full bg-slate-600">
             <h1>Payment Method</h1>
-            <p>{paymentMethod}</p>
+            <p>{paymentmethod}</p>
             <Link
               href="/Payment"
               className=" bg-slate-800 rounded-md w-10 text-sm p-2 flex justify-center items-center h-7 text-white"

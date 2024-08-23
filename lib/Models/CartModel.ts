@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 const oderSchema = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     items: [
       {
         product: {
-          type: mongoose.Schema.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
           required: true,
         },
@@ -69,9 +69,9 @@ export type Order = {
   totalPrice: number;
   isPaid?: boolean;
   isDelivered: boolean;
-  paidAt?: string;
-  deliveredAt?: string;
-  createdAt?: string;
+  paidAt?: Date;
+  deliveredAt?: Date;
+  createdAt?: Date;
 };
 export type OderItem = {
   id: string;

@@ -1,59 +1,70 @@
 "use client";
-
 import CartService from "@/Hooks/UserCart";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useSWRMutation from "swr/mutation";
+import Image from "next/image";
 
 const PlaceOrderClient = () => {
   const router = useRouter();
   const {
-    items,
     paymentmethod,
-    clear,
     Shipaddress,
-    totalPrice,
+    items,
+    itemsPrice,
     taxPrice,
     shippingPrice,
-    itemsPrice,
+    totalPrice,
+    clear,
   } = CartService();
 
   const { trigger: placeOrder, isMutating: isPlacing } = useSWRMutation(
-    "/api/orders/mine",
+    `/api/orders/mine`,
     async (url) => {
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type":"application/json",
         },
         body: JSON.stringify({
           paymentmethod,
+          Shipaddress,
+          items,
+          itemsPrice,
+          taxPrice,
+          shippingPrice,
+          totalPrice,
         }),
       });
-
       const data = await res.json();
       if (res.ok) {
         clear();
-        toast.success("Order placed!");
-
-        return router.push(`order/${data.order._id}`);
+        toast.success("Order placed successfully");
+        return router.push(`/order/${data.order._id}`);
       } else {
         toast.error(data.message);
       }
     }
   );
-
   useEffect(() => {
     if (!paymentmethod) {
-      return router.push("/Payment");
+      return router.push("/payment");
     }
     // if (items.length === 0) {
     //   return router.push("/");
     // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentmethod, router]);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
   }, []);
+
+  if (!mounted) return <></>;
+
   return (
     <div className=" p-6">
       <div className="flex md:flex-row flex-col  gap-2 ">
@@ -81,7 +92,7 @@ const PlaceOrderClient = () => {
           </section>
           <section className="bg-slate-600 p-2 rounded-md text-white">
             <h1 className="text-2xl mb-2">Items</h1>
-            {items.map((e) => (
+            {items.map((e: any) => (
               <div className="w-full grid grid-cols-8   justify-between text-start">
                 <div className="w-12 h-12 col-span-2">
                   <Image
@@ -96,7 +107,7 @@ const PlaceOrderClient = () => {
                 <div className=" text-start col-span-2">{e.name}</div>
                 <div className=" text-center col-span-2">{e.qty}</div>
                 <div className=" text-end col-span-2 me-4">
-                  {e.price * e.qty}
+                  R {e.price * e.qty}
                 </div>
               </div>
             ))}

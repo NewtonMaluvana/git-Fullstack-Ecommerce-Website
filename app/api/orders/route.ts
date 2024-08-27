@@ -1,41 +1,42 @@
 import { auth } from "@/lib/auth";
-import dbConncet from "@/lib/dbConnect";
+import dbConnect from "@/lib/dbConnect";
 import OrderModel, { OderItem } from "@/lib/Models/CartModel";
-import productModel from "@/lib/Models/ProductModel";
+import ProductModel from "@/lib/Models/ProductModel";
 import Round from "@/lib/utils/Round";
-const calcPrice = (items: OderItem[]) => {
+
+const calcPrices = (orderItems: OderItem[]) => {
+  // Calculate the items price
   const itemsPrice = Round(
-      items.reduce((acc, item) => acc + item.price * item.qty, 0)
-    ),
-    shippingPrice = Round(itemsPrice > 600 ? 0 : 250),
-    taxPrice = Round(Number(itemsPrice * 0.15)),
-    totalPrice = Round(itemsPrice + shippingPrice + taxPrice);
+    orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
+  // Calculate the shipping price
+  const shippingPrice = Round(itemsPrice > 100 ? 0 : 10);
+  // Calculate the tax price
+  const taxPrice = Round(Number((0.15 * itemsPrice).toFixed(2)));
+  // Calculate the total price
+  const totalPrice = Round(itemsPrice + shippingPrice + taxPrice);
   return { itemsPrice, shippingPrice, taxPrice, totalPrice };
 };
 
 export const POST = auth(async (req: any) => {
   if (!req.auth) {
     return Response.json(
-      {
-        message: "unauthorized user",
-      },
+      { message: "unauthorized" },
       {
         status: 401,
       }
     );
   }
   const { user } = req.auth;
-
   try {
     const payload = await req.json();
-    await dbConncet();
-    const dbProductPrices = await productModel.find(
+    await dbConnect();
+    const dbProductPrices = await ProductModel.find(
       {
         _id: { $in: payload.items.map((x: { _id: string }) => x._id) },
       },
       "price"
     );
-
     const dbOrderItems = payload.items.map((x: { _id: string }) => ({
       ...x,
       product: x._id,
@@ -44,30 +45,32 @@ export const POST = auth(async (req: any) => {
     }));
 
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
-      calcPrice(dbOrderItems);
+      calcPrices(dbOrderItems);
 
     const newOrder = new OrderModel({
       items: dbOrderItems,
       itemsPrice,
-      shippingPrice,
       taxPrice,
+      shippingPrice,
       totalPrice,
       shippingAddress: payload.shippingAddress,
-      paymentmethod: payload.paymentmethod,
+      paymentMethod: payload.paymentMethod,
       user: user._id,
     });
 
-    const createOrder = await newOrder.save();
+    const createdOrder = await newOrder.save();
     return Response.json(
-      {
-        message: "Order created",
-        order: createOrder,
-      },
+      { message: "Order has been created", order: createdOrder },
       {
         status: 201,
       }
     );
-  } catch (error: any) {
-    return Response.json({ message: error.message }, { status: 500 });
+  } catch (err: any) {
+    return Response.json(
+      { message: err.message },
+      {
+        status: 500,
+      }
+    );
   }
-});
+}) as any;

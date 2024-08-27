@@ -60,20 +60,6 @@ export const config = {
     error: "/Login",
   },
   callbacks: {
-    authorized({ request, auth }: any) {
-      const protectedPaths = [
-        /\/Checkout/,
-        /\/Payment/,
-        /\/Place-order/,
-        /\/Profile/,
-        /\/Order\/(.*)/,
-        /\/Admin/,
-      ];
-
-      const { pathname } = request.nexturl;
-      if (protectedPaths.some((p) => p.test(pathname))) return !!auth;
-      return true;
-    },
     async jwt({ user, trigger, session, token }: any) {
       if (user) {
         token.user = {

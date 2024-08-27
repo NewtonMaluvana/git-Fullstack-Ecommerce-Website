@@ -8,7 +8,7 @@ interface InputProps {
   label: string;
   type?: string;
   disabled?: boolean;
-  label2?: string;
+
   required: boolean;
   register: UseFormRegister<any>;
   errors: FieldErrors;
@@ -19,7 +19,7 @@ const Inputs: React.FC<InputProps> = ({
 
   type,
   disabled,
-  label2,
+
   required,
   register,
   errors,
@@ -29,7 +29,7 @@ const Inputs: React.FC<InputProps> = ({
       <input
         id={id}
         type={type}
-        {...register(id, { required: `${label2}` })}
+        {...register(id, { required })}
         disabled={disabled}
         placeholder=""
         className={`peer w-full my-4 p-4 pt-6 outline-none border-2 rounded-md transition disabled:opacity-70 disabled:cursor-not-allowed 

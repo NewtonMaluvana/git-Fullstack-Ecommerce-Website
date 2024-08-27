@@ -23,21 +23,21 @@ const oderSchema = new mongoose.Schema(
       },
     ],
     shippingAddress: {
-      fullName: { type: String, required: true },
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: Number, required: true },
-      country: { type: String, required: true },
+      fullName: { type: String, required: false },
+      address: { type: String, required: false },
+      city: { type: String, required: false },
+      postalCode: { type: Number, required: false },
+      country: { type: String, required: false },
     },
 
-    paymentmethod: { type: String, required: true },
+    paymentmethod: { type: String, required: false },
     paymentResult: { id: String, status: String, email_address: String },
-    itemsPrice: { type: Number, required: true },
-    shippingPrice: { type: Number, required: true },
-    taxPrice: { type: Number, required: true },
-    totalPrice: { type: Number, required: true },
-    isPaid: { type: Boolean, required: true, default: false },
-    isDelivered: { type: Boolean, required: true, default: false },
+    itemsPrice: { type: Number, required: false },
+    shippingPrice: { type: Number, required: false },
+    taxPrice: { type: Number, required: false },
+    totalPrice: { type: Number, required: false },
+    isPaid: { type: Boolean, required: false, default: false },
+    isDelivered: { type: Boolean, required: false, default: false },
     paidAt: { type: Date },
     deliveredAt: { type: Date },
   },
@@ -67,11 +67,11 @@ export type Order = {
   shippingPrice: number;
   taxPrice: number;
   totalPrice: number;
-  isPaid?: boolean;
+  isPaid: boolean;
   isDelivered: boolean;
-  paidAt?: Date;
-  deliveredAt?: Date;
-  createdAt?: Date;
+  paidAt?: string;
+  deliveredAt?: string;
+  createdAt: string;
 };
 export type OderItem = {
   id: string;
@@ -86,6 +86,6 @@ export type ShippingAddress = {
   fullName: string;
   address: string;
   city: string;
-  country: string;
   postalCode: number;
+  country: string;
 };

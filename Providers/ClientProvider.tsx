@@ -1,12 +1,11 @@
 "use client";
-
 import { cartStore } from "@/Hooks/UserCart";
-import { error } from "console";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
+
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { SWRConfig } from "swr";
 
-export default function ClientProvider({
+export default function ClientProviders({
   children,
 }: {
   children: React.ReactNode;
@@ -20,7 +19,7 @@ export default function ClientProvider({
     window.addEventListener("focus", updateStore);
     return () => {
       document.removeEventListener("visibilitychange", updateStore);
-      document.removeEventListener("focus", updateStore);
+      window.removeEventListener("focus", updateStore);
     };
   }, []);
   return (
@@ -32,13 +31,16 @@ export default function ClientProvider({
         fetcher: async (resource, init) => {
           const res = await fetch(resource, init);
           if (!res.ok) {
-            throw new Error("an error occured fecthing data");
+            throw new Error("An error occurred while fetching the data.");
           }
           return res.json();
         },
       }}
     >
-      {children}
+      <div>
+        <Toaster toastOptions={{ className: "toaster-con" }} />
+        {children}
+      </div>
     </SWRConfig>
   );
 }

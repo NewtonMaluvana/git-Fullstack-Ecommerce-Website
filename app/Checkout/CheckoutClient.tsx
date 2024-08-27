@@ -97,6 +97,15 @@ const CheckoutClient = () => {
               router.push("/Payment");
             }}
           />
+
+          <button
+            type="submit"
+            onClick={() => {
+              router.push("/Payment");
+            }}
+          >
+            Next
+          </button>
         </div>
       </form>
     </div>

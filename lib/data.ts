@@ -1,10 +1,10 @@
-import { colors } from "@mui/material";
+
 import bcrypt from "bcryptjs";
 const data = {
   users: [
     {
       name: "Newton",
-      email: "andzanimlauvana@gmail.com",
+      email: "newton525@gmail.com",
       password: bcrypt.hashSync("1234"),
       isAdmin: true,
     },

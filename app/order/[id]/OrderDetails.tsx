@@ -1,14 +1,19 @@
 "use client";
-import CartService from "@/Hooks/UserCart";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import useSWRMutation from "swr/mutation";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import useSWR from "swr";
 
-const PlaceOrderClient = () => {
-  const router = useRouter();
+export const OrderDetails = ({
+  orderId,
+  paypalClientId,
+}: {
+  orderId: string;
+  paypalClientId: string;
+}) => {
+  const { data: session } = useSession();
+  const { data, error } = useSWR(`api/orders/${orderId}`);
+
   const {
     paymentMethod,
     shippingAddress,
@@ -17,78 +22,38 @@ const PlaceOrderClient = () => {
     taxPrice,
     shippingPrice,
     totalPrice,
-    clear,
-  } = CartService();
-
-  const { trigger: placeOrder, isMutating: isPlacing } = useSWRMutation(
-    `/api/orders/mine`,
-    async (url) => {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          paymentMethod,
-          shippingAddress,
-          items,
-          itemsPrice,
-          taxPrice,
-          shippingPrice,
-          totalPrice,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        clear();
-        toast.success("Order placed successfully");
-        return router.push(`/order/${data.order._id}`);
-      } else {
-        toast.error(data.message);
-      }
-    }
-  );
-  useEffect(() => {
-    if (!paymentMethod) {
-      return router.push("/payment");
-    }
-    // if (items.length === 0) {
-    //   return router.push("/");
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paymentMethod, router]);
-
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <></>;
-
+    isDelivered,
+    deliveredAt,
+    isPaid,
+    paidAt,
+  } = data;
   return (
     <div className=" p-6">
+      <h1>Order {orderId}</h1>
       <div className="flex md:flex-row flex-col  gap-2 ">
         <div className="col-span-8 gap-4  flex flex-col w-[100%]">
           <section className="flex  text-white rounded-md text-xl flex-col gap-2 justify-center p-4 w-full bg-slate-600">
             <h1 className="text-2xl">Shipping Adress</h1>
             <p>{shippingAddress.fullName}</p>
             <p>{shippingAddress.address}</p>
-            <Link
-              href="/Checkout"
-              className=" bg-slate-800 p-2 text-sm flex justify-center items-center rounded-md w-10 h-7 text-white"
-            >
-              Edit
-            </Link>
+            <div className="">
+              {isDelivered ? (
+                <p className="text-green-500">delivered</p>
+              ) : (
+                <p className="text-red-500">Not delivered</p>
+              )}
+            </div>
           </section>
           <section className="flex  text-white rounded-md text-xl flex-col gap-2 justify-center p-4 w-full bg-slate-600">
             <h1>Payment Method</h1>
             <p>{paymentMethod}</p>
-            <Link
-              href="/Payment"
-              className=" bg-slate-800 rounded-md w-10 text-sm p-2 flex justify-center items-center h-7 text-white"
-            >
-              Edit
-            </Link>
+            <div className="">
+              {isPaid ? (
+                <p className="text-green-500"> Paid</p>
+              ) : (
+                <p className="text-red-500">Not Paid</p>
+              )}
+            </div>
           </section>
           <section className="bg-slate-600 p-2 rounded-md text-white">
             <h1 className="text-2xl mb-2">Items</h1>
@@ -111,12 +76,6 @@ const PlaceOrderClient = () => {
                 </div>
               </div>
             ))}
-            <Link
-              href="/Cart"
-              className="my-4 bg-slate-800 p-2 text-sm flex justify-center items-center rounded-md w-10 h-7 text-white"
-            >
-              Edit
-            </Link>
           </section>
         </div>
         <div className="col-span-4 w-full bg-slate-800 h-[300px] p-2 rounded-md flex flex-col justify-center gap-4 mx-auto text-white">
@@ -135,17 +94,8 @@ const PlaceOrderClient = () => {
               <span>Total</span> <span>R {totalPrice}</span>
             </li>
           </ul>
-          <div className="flex justify-center items-center">
-            <button
-              onClick={() => placeOrder()}
-              className=" md:w-[250px] w-min-[50px] w-[200px]  rounded-md py-4 p-2 bg-purple-800 text-white"
-            >
-              Place Order
-            </button>
-          </div>
         </div>
       </div>
     </div>
   );
 };
-export default PlaceOrderClient;

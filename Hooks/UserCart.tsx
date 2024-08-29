@@ -2,7 +2,6 @@ import { create } from "zustand";
 import Round from "@/lib/utils/Round";
 import { OderItem, ShippingAddress } from "@/lib/Models/CartModel";
 import { persist } from "zustand/middleware";
-import { strict } from "assert";
 
 type Cart = {
   items: OderItem[];
@@ -10,8 +9,8 @@ type Cart = {
   taxPrice: number;
   shippingPrice: number;
   totalPrice: number;
-  paymentmethod: string;
-  Shipaddress: ShippingAddress;
+  paymentMethod: string;
+  shippingAddress: ShippingAddress;
 };
 const initialState: Cart = {
   items: [],
@@ -19,13 +18,13 @@ const initialState: Cart = {
   taxPrice: 0,
   shippingPrice: 0,
   totalPrice: 0,
-  paymentmethod: "PayPal",
-  Shipaddress: {
+  paymentMethod: "PayPal",
+  shippingAddress: {
     fullName: "",
     address: "",
     city: "",
     country: "",
-    postalCode: 0,
+    postalCode: "",
   },
 };
 
@@ -42,8 +41,8 @@ export default function CartService() {
     taxPrice,
     shippingPrice,
     totalPrice,
-    paymentmethod,
-    Shipaddress,
+    paymentMethod,
+    shippingAddress,
   } = cartStore();
 
   return {
@@ -52,8 +51,8 @@ export default function CartService() {
     taxPrice,
     shippingPrice,
     totalPrice,
-    paymentmethod,
-    Shipaddress,
+    paymentMethod,
+    shippingAddress,
     increase: (item: OderItem) => {
       const ExistItem = items.find((e) => e.id === item.id);
 
@@ -72,14 +71,14 @@ export default function CartService() {
         totalPrice,
       });
     },
-    getShippingAddress: (Shipaddress: ShippingAddress) => {
+    saveShippingAddress: (shippingAddress: ShippingAddress) => {
       cartStore.setState({
-        Shipaddress,
+        shippingAddress,
       });
     },
-    getPaymentMethod: (paymentmethod: string) => {
+    getPaymentMethod: (paymentMethod: string) => {
       cartStore.setState({
-        paymentmethod,
+        paymentMethod,
       });
     },
     decrease: (item: OderItem) => {

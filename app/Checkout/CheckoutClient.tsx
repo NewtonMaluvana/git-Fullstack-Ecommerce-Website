@@ -3,7 +3,7 @@
 import CartService from "@/Hooks/UserCart";
 import UserCart from "@/Hooks/UserCart";
 import { ShippingAddress } from "@/lib/Models/CartModel";
-import { TRACE_OUTPUT_VERSION } from "next/dist/shared/lib/constants";
+
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -15,7 +15,7 @@ import { useSession } from "next-auth/react";
 
 const CheckoutClient = () => {
   const router = useRouter();
-  const { getShippingAddress, Shipaddress } = CartService();
+  const { saveShippingAddress, shippingAddress } = CartService();
   const {
     register,
     handleSubmit,
@@ -27,20 +27,20 @@ const CheckoutClient = () => {
       address: "",
       city: "",
       country: "",
-      postalCode: 0,
+      postalCode: "",
     },
   });
 
   useEffect(() => {
-    setValue("fullName", Shipaddress.fullName);
-    setValue("address", Shipaddress.address);
-    setValue("city", Shipaddress.city);
-    setValue("country", Shipaddress.country);
-    setValue("postalCode", Shipaddress.postalCode);
-  }, [setValue, Shipaddress]);
+    setValue("fullName", shippingAddress.fullName);
+    setValue("address", shippingAddress.address);
+    setValue("city", shippingAddress.city);
+    setValue("country", shippingAddress.country);
+    setValue("postalCode", shippingAddress.postalCode);
+  }, [setValue, shippingAddress]);
 
   const formSubmit: SubmitHandler<ShippingAddress> = async (data) => {
-    getShippingAddress(data);
+    saveShippingAddress(data);
 
     router.push("/Payment");
   };

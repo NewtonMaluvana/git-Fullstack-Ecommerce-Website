@@ -9,7 +9,7 @@ import { FaAddressBook, FaCheck } from "react-icons/fa";
 
 const PaymentClient = () => {
   const router = useRouter();
-  const { getPaymentMethod, paymentmethod, Shipaddress } = CartService();
+  const { getPaymentMethod, paymentMethod, shippingAddress } = CartService();
   const [Selectedpaymethod, setSelectedPayMethod] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,13 +19,13 @@ const PaymentClient = () => {
   };
 
   useEffect(() => {
-    if (!Shipaddress.address) {
+    if (!shippingAddress.address) {
       router.push("Checkout");
       toast.success("Please enter your address");
     }
 
-    setSelectedPayMethod(paymentmethod || "PayPal");
-  }, [paymentmethod, router, Shipaddress.address]);
+    setSelectedPayMethod(paymentMethod || "PayPal");
+  }, [paymentMethod, router, shippingAddress.address]);
   return (
     <div className="mx-auto my-4 w-[50%] bg-slate-500 p-4 rounded-md shadow-xl">
       <h1 className="text-center text-4xl text-purple-600">Payment Method</h1>

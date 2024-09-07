@@ -54,7 +54,7 @@ export const POST = auth(async (req: any) => {
       shippingPrice,
       totalPrice,
       shippingAddress: payload.shippingAddress,
-      paymentMethod: payload.paymentmethod,
+      paymentMethod: payload.paymentMethod,
       user: user._id,
     });
 

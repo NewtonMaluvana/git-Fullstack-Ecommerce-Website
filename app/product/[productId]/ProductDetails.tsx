@@ -74,7 +74,7 @@ const ProductDetails: React.FC<PropductProps> = ({ product, item }) => {
           <span>BRAND:</span> {product.brand}
         </div>
         <div className="">
-          {product.conutInStock > 0 ? (
+          {product.conutInStock != 0 ? (
             <span className="text-green-700">In stock</span>
           ) : (
             <span className="text-red-700">Out of Stock</span>

@@ -1,19 +1,45 @@
 "use client";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import useSWR from "swr";
 
-export const OrderDetails = ({
+export default function OrderDetails({
   orderId,
   paypalClientId,
 }: {
   orderId: string;
   paypalClientId: string;
-}) => {
+}) {
   const { data: session } = useSession();
-  const { data, error } = useSWR(`api/orders/${orderId}`);
+  function createPayPalOrder() {
+    return fetch(`/api/orders/${orderId}/paypalOrder`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((order) => order.id);
+  }
 
+  function onApprovePayPalOrder(data: any) {
+    return fetch(`/api/orders/${orderId}/capturePaypalOrder`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((orderData) => {
+        toast.success("Order paid successfully");
+      });
+  }
+  const { data, error } = useSWR(`/api/orders/${orderId}`);
+  if (!data) return "Loading....";
   const {
     paymentMethod,
     shippingAddress,
@@ -29,7 +55,9 @@ export const OrderDetails = ({
   } = data;
   return (
     <div className=" p-6">
-      <h1>Order {orderId}</h1>
+      <h1 className="text-3xl my-4">
+        Order: <span className="text-xl">{orderId}</span>{" "}
+      </h1>
       <div className="flex md:flex-row flex-col  gap-2 ">
         <div className="col-span-8 gap-4  flex flex-col w-[100%]">
           <section className="flex  text-white rounded-md text-xl flex-col gap-2 justify-center p-4 w-full bg-slate-600">
@@ -93,9 +121,22 @@ export const OrderDetails = ({
             <li className="flex justify-between">
               <span>Total</span> <span>R {totalPrice}</span>
             </li>
+
+            <div className="flex justify-center items-center">
+              {!isPaid && paymentMethod === "PayPal" && (
+                <li className="w-[70%] z-0 mt-2">
+                  <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+                    <PayPalButtons
+                      createOrder={createPayPalOrder}
+                      onApprove={onApprovePayPalOrder}
+                    />
+                  </PayPalScriptProvider>
+                </li>
+              )}
+            </div>
           </ul>
         </div>
       </div>
     </div>
   );
-};
+}

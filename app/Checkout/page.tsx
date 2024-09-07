@@ -4,7 +4,7 @@ import CheckoutClient from "./CheckoutClient";
 
 const page = () => {
   return (
-    <div className="p-2">
+    <div className="p-2 min-h-full">
       <Container>
         <FomrWrap>
           <CheckoutClient />

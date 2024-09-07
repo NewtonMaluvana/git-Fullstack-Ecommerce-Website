@@ -52,10 +52,9 @@ const PlaceOrderClient = () => {
     if (!paymentMethod) {
       return router.push("/payment");
     }
-    // if (items.length === 0) {
-    //   return router.push("/");
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (items.length === 0) {
+      return router.push("/");
+    }
   }, [paymentMethod, router]);
 
   const [mounted, setMounted] = useState(false);

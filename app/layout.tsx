@@ -34,7 +34,6 @@ export default async function RootLayout({
               },
             }}
           />
-
           <NavBar />
           <main className="flex-grow">{children}</main>
           <Footer />

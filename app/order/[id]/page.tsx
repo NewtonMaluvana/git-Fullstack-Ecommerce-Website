@@ -1,10 +1,5 @@
-import { OrderDetails } from "./OrderDetails";
-
-export function generateMetadata({ params }: { params: { id: string } }) {
-  return {
-    title: `Order ${params.id}`,
-  };
-}
+"use client";
+import OrderDetails from "./OrderDetails";
 
 export default function OrderDetailsPage({
   params,

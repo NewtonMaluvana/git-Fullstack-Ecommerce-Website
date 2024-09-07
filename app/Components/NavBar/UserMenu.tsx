@@ -8,12 +8,14 @@ import { FaCaretDown } from "react-icons/fa";
 import BackDrop from "./BackDrop";
 import { CurrentUser } from "@/types";
 import { useRouter } from "next/navigation";
+import CartService from "@/Hooks/UserCart";
 
 interface UserMenuProps {
   currentUser: CurrentUser;
 }
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { init } = CartService();
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
@@ -36,23 +38,16 @@ const UserMenu = () => {
                 <Link
                   onClick={toggleOpen}
                   className="p-2 block text-center"
-                  href="/Orders"
+                  href="/OrderHistory"
                 >
-                  Your Orders
-                </Link>
-
-                <Link
-                  onClick={toggleOpen}
-                  className="p-2 block text-center"
-                  href="/Admin"
-                >
-                  Admin Dashboard
+                  Order History
                 </Link>
                 <hr className="bg-black" />
                 <div
                   onClick={() => {
                     toggleOpen();
                     signOut({ callbackUrl: "/Login" });
+                    init();
                   }}
                   className="flex justify-center items-center p-2 "
                 >

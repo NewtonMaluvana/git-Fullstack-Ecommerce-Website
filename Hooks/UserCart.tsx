@@ -101,6 +101,7 @@ export default function CartService() {
         totalPrice,
       });
     },
+    init: () => cartStore.setState(initialState),
     clear: () => {
       cartStore.setState({
         items: [],

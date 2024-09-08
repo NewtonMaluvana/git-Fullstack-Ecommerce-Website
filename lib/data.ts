@@ -1,4 +1,3 @@
-
 import bcrypt from "bcryptjs";
 const data = {
   users: [
@@ -197,7 +196,7 @@ const data = {
       countInStock: 6,
     },
     {
-      id: "13",
+      id: "14",
       name: "Brook Short",
       image: "/images/brook_short.png",
 

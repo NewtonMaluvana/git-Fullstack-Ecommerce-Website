@@ -6,13 +6,9 @@ import ProductCard from "./Components/Home/ProductCard";
 import productService from "@/lib/services/getProduct";
 import { MdPhoneAndroid, MdShop } from "react-icons/md";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import { Autoplay, Navigation, Pagination } from "swiper/modules";
-// import "swiper/css";
-// import "swiper/scss";
-// import "swiper/scss/navigation";
-// import "swiper/scss/pagination";
+
 import { FaDesktop } from "react-icons/fa";
-import { Catergory } from "./Components/Catergory";
+
 export default async function Home() {
   let all = await productService.getAllProducts();
   const Best = await productService.getFeatured();
@@ -53,7 +49,7 @@ export default async function Home() {
       <div className="w-full h-16 px-5 rounded-md my-1 bg-slate-400 flex justify-between">
         {cat.map((e) => (
           <div
-            // onClick={() => {}}
+            key={e.name}
             className="text-blue-600 hover:scale-110 duration-1000 cursor-pointer p-1 flex gap-2 justify-center text-3xl items-center"
           >
             {e.logo}
@@ -69,7 +65,6 @@ export default async function Home() {
           <ProductCard product={item} key={item.id} />
         ))}
       </div>
-      /*{" "}
     </div>
   );
 }

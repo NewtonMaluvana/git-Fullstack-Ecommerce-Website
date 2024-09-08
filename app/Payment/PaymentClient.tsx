@@ -40,7 +40,7 @@ const PaymentClient = () => {
 
         <form className="" onSubmit={handleSubmit}>
           {["Stripe", "PayPal", "Cash On Delivery(COD)"].map((payment) => (
-            <div className="">
+            <div key={payment} className="">
               <label className="m-2 flex justify-between cursor-pointer">
                 <span className="text-white text-2xl flex   text-wrap">
                   {payment}

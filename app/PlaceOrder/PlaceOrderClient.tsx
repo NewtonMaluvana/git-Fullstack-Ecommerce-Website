@@ -58,9 +58,6 @@ const PlaceOrderClient = () => {
     if (!paymentMethod) {
       router.push("/payment");
     }
-    if (items.length === 0) {
-      router.push("/");
-    }
   }, [paymentMethod, router]);
 
   const [mounted, setMounted] = useState(false);
@@ -102,7 +99,10 @@ const PlaceOrderClient = () => {
           <section className="bg-slate-600 p-2 rounded-md text-white">
             <h1 className="text-2xl mb-2">Items</h1>
             {items.map((e: any) => (
-              <div className="w-full grid grid-cols-8   justify-between text-start">
+              <div
+                key={e.name}
+                className="w-full grid grid-cols-8   justify-between text-start"
+              >
                 <div className="w-12 h-12 col-span-2">
                   <Image
                     className="w-full h-full object-contain"

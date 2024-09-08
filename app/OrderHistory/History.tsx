@@ -32,7 +32,10 @@ export default function MyOrders() {
 
     <div className="flex gap-4 flex-col">
       {orders.map((order: Order) => (
-        <div className="w-[80%] rounded-md md:grid text-center md:w-full flex flex-col  mx-auto md:grid-cols-12 bg-slate-600 p-8 text-white">
+        <div
+          key={order._id}
+          className="w-[80%] rounded-md md:grid text-center md:w-full flex flex-col  mx-auto md:grid-cols-12 bg-slate-600 p-8 text-white"
+        >
           <div className="col-span-2 my-2 text-green-600">
             {order._id.substring(20, 24)}
           </div>

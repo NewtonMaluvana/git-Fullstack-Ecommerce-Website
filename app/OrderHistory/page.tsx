@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function OrderHistory() {
   return (
     <div className=" w-full">
-      <h1 className="text-2xl py-2">My Orders</h1>
+      <h1 className="text-2xl py-2 text-center mt-6">My Orders</h1>
       <MyOrders />
     </div>
   );

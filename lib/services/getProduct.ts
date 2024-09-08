@@ -15,9 +15,13 @@ const getFeatured = cache(async () => {
   const products = await productModel.find({ isFeatured: true }).lean();
   return products as Product[];
 });
-const getCategory = cache(async (cat: string) => {
+const getIphone = cache(async (name: string) => {
   await dbConncet();
-  const products = await productModel.find({ catergory: cat }).lean();
+  const products = await productModel
+    .find({
+      name: name,
+    })
+    .lean();
   return products as Product[];
 });
 const getProduct = cache(async (ID: string) => {
@@ -29,7 +33,7 @@ const getProduct = cache(async (ID: string) => {
 const productService = {
   getAllProducts,
   getFeatured,
-  getCategory,
+  getIphone,
   getProduct,
 };
 

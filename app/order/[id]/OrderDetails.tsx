@@ -3,6 +3,7 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 
@@ -13,6 +14,7 @@ export default function OrderDetails({
   orderId: string;
   paypalClientId: string;
 }) {
+  const router = useRouter();
   const { data: session } = useSession();
   function createPayPalOrder() {
     return fetch(`/api/orders/${orderId}/paypalOrder`, {
@@ -38,8 +40,18 @@ export default function OrderDetails({
         toast.success("Order paid successfully");
       });
   }
+
+  if (!session) {
+    toast.error("Please login first");
+    router.push("/Login");
+  }
   const { data, error } = useSWR(`/api/orders/${orderId}`);
-  if (!data) return "Loading....";
+  if (!data)
+    return (
+      <div className=" h-screen flex justify-center items-center">
+        Loading....
+      </div>
+    );
   const {
     paymentMethod,
     shippingAddress,

@@ -10,7 +10,7 @@ import Provider from "@/Providers/Provider";
 const inter = Roboto({ subsets: ["latin"], weight: ["500"] });
 
 export const metadata: Metadata = {
-  title: "JAY Store",
+  title: "Newton Store",
   description: "FullStack Ecommerce Website",
 };
 
@@ -35,7 +35,7 @@ export default async function RootLayout({
             }}
           />
           <NavBar />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow min-h-screen ">{children}</main>
           <Footer />
         </Provider>
       </body>

@@ -15,6 +15,9 @@ import data from "@/lib/data";
 import Image from "next/image";
 import CartService from "@/Hooks/UserCart";
 import SetQuantity from "../SetQuantity";
+import toast from "react-hot-toast";
+import ProductCard from "@/app/Components/Home/ProductCard";
+import productService from "@/lib/services/getProduct";
 //details for each products
 
 const HorizonLine = () => {
@@ -38,11 +41,13 @@ const ProductDetails: React.FC<PropductProps> = ({ product, item }) => {
   //method for handling color for ech product
   const toCartHandler = () => {
     increase(item);
+    toast.success("Added to Cart");
   };
 
   if (!product) {
     return <div className="">Product not found</div>;
   }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 items-center   ">
       <div className="grid m-3 grid-cols-6 gap-2 h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] ">
@@ -67,7 +72,7 @@ const ProductDetails: React.FC<PropductProps> = ({ product, item }) => {
           {product.description}
         </div>
         <HorizonLine />
-        <div className="">
+        <div className=" uppercase">
           <span>CATERGORY:</span> {product.catergory}
         </div>
         <div className="">
@@ -113,6 +118,11 @@ const ProductDetails: React.FC<PropductProps> = ({ product, item }) => {
           </>
         )}
       </div>
+      {/* <div className="flex ">
+        {Cat.map((item) => (
+          <ProductCard product={item} key={item.id} />
+        ))}
+      </div> */}
     </div>
   );
 };

@@ -12,6 +12,7 @@ import Button from "../Components/Button";
 import { FaAddressBook, FaCheck } from "react-icons/fa";
 import Inputs from "../Components/Forms/Inputs";
 import { useSession } from "next-auth/react";
+import { auth } from "@/lib/auth";
 
 const CheckoutClient = () => {
   const router = useRouter();
@@ -76,7 +77,8 @@ const CheckoutClient = () => {
   );
   const { data: session } = useSession();
   if (!session) {
-    return <p className="text-center ">Already logged in Redirecting.....</p>;
+    toast.error("Please login first");
+    router.push("/Login");
   }
   return (
     <div className="m-2 p-4 w-full z-[2] rounded-md bg-slate-800">
@@ -97,15 +99,6 @@ const CheckoutClient = () => {
               router.push("/Payment");
             }}
           />
-
-          <button
-            type="submit"
-            onClick={() => {
-              router.push("/Payment");
-            }}
-          >
-            Next
-          </button>
         </div>
       </form>
     </div>

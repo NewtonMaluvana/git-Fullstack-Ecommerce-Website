@@ -13,9 +13,12 @@ const Banner = () => {
           <p className="text-3xl md:text-5xl mt-2 font-medium text-orange-400">
             35% of Discount
           </p>
-          <button className="flex items-center justify-around md:w-36 w-[130px] min-w-[120px] bg-purple-800 rounded-md p-3 mt-4 hover:scale-90 duration-1000 hover:bg-gray-600 hover:rounded-3xl ">
+          <a
+            href="#shop"
+            className="flex items-center justify-around md:w-36 w-[130px] min-w-[120px] bg-purple-800 rounded-md p-3 mt-4 hover:scale-90 duration-1000 hover:bg-gray-600 hover:rounded-3xl "
+          >
             <FaShoppingBag /> Shop Now
-          </button>
+          </a>
         </div>
         <div className="md:mb-0 mb-10 w-6/12 h-[300px]">
           <Image

@@ -28,7 +28,7 @@ const UserMenu = () => {
           className="flex  items-center justify-center gap-1 border-[1px] border-x-orange-300 rounded-full p-1 hover:shadow-md hover:border-orange-600 cursor-pointer transition duration-1000"
           onClick={toggleOpen}
         >
-          <Avatar src={`${""}`} />
+          <Avatar src={session?.user?.image ? " " : ""} />
           <FaCaretDown />
         </div>
         {isOpen && (

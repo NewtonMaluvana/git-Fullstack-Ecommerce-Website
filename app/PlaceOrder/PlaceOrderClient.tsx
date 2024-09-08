@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import useSWRMutation from "swr/mutation";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const PlaceOrderClient = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const PlaceOrderClient = () => {
     totalPrice,
     clear,
   } = CartService();
-
+  const { data: session } = useSession();
   const { trigger: placeOrder, isMutating: isPlacing } = useSWRMutation(
     `/api/orders/mine`,
     async (url) => {
@@ -48,12 +49,17 @@ const PlaceOrderClient = () => {
       }
     }
   );
+
+  if (!session) {
+    toast.error("Please login first");
+    router.push("/Login");
+  }
   useEffect(() => {
     if (!paymentMethod) {
-      return router.push("/payment");
+      router.push("/payment");
     }
     if (items.length === 0) {
-      return router.push("/");
+      router.push("/");
     }
   }, [paymentMethod, router]);
 
@@ -62,8 +68,12 @@ const PlaceOrderClient = () => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <></>;
+  if (!mounted) <></>;
 
+  if (!session) {
+    toast.error("Please login first");
+    router.push("/Login");
+  }
   return (
     <div className=" p-6">
       <div className="flex md:flex-row flex-col  gap-2 ">

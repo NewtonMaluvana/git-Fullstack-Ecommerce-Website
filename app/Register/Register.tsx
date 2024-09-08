@@ -81,14 +81,7 @@ const Register = () => {
       <h1 className="text-center text-3xl font-semibold mb-12 -4 ">
         Sign Up for Jay Shopping
       </h1>
-      <Button
-        outline
-        icon={FaGoogle}
-        onClick={() => {
-          signIn("google");
-        }}
-        label="Sign Up with Google"
-      />
+
       <hr className="w-full bg-slate-800" />
       <Inputs
         label="Name"
@@ -125,7 +118,7 @@ const Register = () => {
         />
       </div>
 
-      <Link href="/Login" className="mt-4 text-black ">
+      <Link href="/Login" className="mt-4 text-orange-700 ">
         Already have an Account? <span className="underline"> Login</span>
       </Link>
     </form>

@@ -17,10 +17,6 @@ const Product = async ({ params }: { params: Params }) => {
           product={produc}
           item={{ ...produc, qty: 0, color: "", size: "" }}
         />
-        <div className="mt-20 flex flex-col">
-          <div className=""> Add Rating</div>
-          <ListRating product={produc} />
-        </div>
       </Container>
     </div>
   );

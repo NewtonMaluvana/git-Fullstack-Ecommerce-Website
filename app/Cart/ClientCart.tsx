@@ -10,6 +10,7 @@ import Button from "../Components/Button";
 
 import { useRouter } from "next/navigation";
 import CartService from "@/Hooks/UserCart";
+import toast from "react-hot-toast";
 
 const ClientCart = () => {
   const { items, increase, decrease, itemsPrice, del } = CartService();
@@ -36,17 +37,17 @@ const ClientCart = () => {
         Shopping Cart
       </h1>
 
-      <div className="grid grid-cols-12 gap-6  w-full">
-        <div className="  w-full col-span-8">
+      <div className=" xl:grid xl:grid-cols-12  flex flex-col  w-full">
+        <div className="w-full xl:col-span-8">
           {items.map((product) => {
             return (
               <div
                 key={2}
-                className="flex border-y-2 my-2 py-2 items-center justify-between  col-span-8 px-6"
+                className="flex border-y-2 my-2 py-2 items-center justify-between  xl:col-span-8 md:px-6 px-2"
               >
-                <div className="col-span-2 flex items-center">
+                <div className="col-span-4 flex items-center">
                   <Link href={`/product/${product.id}`}>
-                    <div className="relative w-[70px] h-[70px] aspect-squares">
+                    <div className="relative m-2 w-[80px] h-[80px] aspect-squares">
                       <Image
                         fill
                         className="object-contain mr-5"
@@ -56,18 +57,17 @@ const ClientCart = () => {
                     </div>
                   </Link>
 
-                  <div className=" flex flex-col gap-4">
-                    <p className="text-lg font-medium">
+                  <div className=" flex flex-col gap-4 ">
+                    <p className="text-lg font-medium box-content">
                       {product.name.length >= 25
                         ? product.name.substring(0, 23) + "..."
                         : product.name}
                     </p>
 
-                    <p>{}</p>
-
                     <button
                       onClick={() => {
                         del(product);
+                        toast.error("item removed!");
                       }}
                       className=" flex items-center gap-1  underline cursor-pointer"
                     >
@@ -75,32 +75,33 @@ const ClientCart = () => {
                     </button>
                   </div>
                 </div>
+                <div className="col-span-6 gap-2 justify-center items-center flex md:flex-row flex-col">
+                  <div className="flex  justify-center text-xl box-content font-semibold">
+                    R{product.price}
+                  </div>
 
-                <div className="text-center text-xl font-semibold">
-                  <p className="m-2 text-lg font-normal">Price:</p>R
-                  {product.price}
-                </div>
-
-                <div className="">
-                  <SetQuantity
-                    cartCounter={true}
-                    cartProduct={product}
-                    handleQtyDecrease={() => {
-                      decrease(product);
-                    }}
-                    handleQtyIncrease={() => {
-                      increase(product);
-                    }}
-                  />
-                </div>
-                <div className="">
-                  <p>Total</p> R {product.price * product.qty}
+                  <div className=" box-content">
+                    <SetQuantity
+                      cartCounter={true}
+                      cartProduct={product}
+                      handleQtyDecrease={() => {
+                        decrease(product);
+                      }}
+                      handleQtyIncrease={() => {
+                        increase(product);
+                      }}
+                    />
+                  </div>
+                  <div className="box-content">
+                    <p className=" uppercase">Total:</p> R{" "}
+                    {product.price * product.qty}
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
-        <div className=" col-span-4 w-full p-4">
+        <div className=" xl:col-span-4 w-full p-4">
           <div className="flex justify-between">
             <p className="text-2xl">Sub Total:</p>
             <p>R {itemsPrice}</p>

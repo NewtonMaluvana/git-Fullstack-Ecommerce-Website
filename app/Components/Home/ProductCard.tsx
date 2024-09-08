@@ -11,7 +11,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     <div
       onClick={() => router.push(`/product/${product.id}`)}
       className="col-span-1
-    cursor-pointer border-[2px] rounded hover:border-black hover:scale-110 duration-1000"
+    cursor-pointer border-[2px] bg-slate-100 rounded hover:border-black hover:scale-110 duration-1000"
     >
       <div className="m-auto p-4 flex flex-col items-center">
         <div className="w-2/3 h-48  mx-auto">

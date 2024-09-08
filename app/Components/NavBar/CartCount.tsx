@@ -19,11 +19,11 @@ const CartCount = () => {
     >
       <FaShoppingBag className="text-2xl text-white" />
 
-      <span
+      <span 
         className={`absolute right-[-13px] top-[-13px] text-xs ${
           items.reduce((a, c) => a + c.qty, 0) === 0
             ? "bg-red-600"
-            : "bg-orange-500"
+            : "bg-blue-500"
         } text-white rounded-full w-6 h-6   flex justify-center items-center`}
       >
         {items.reduce((a, c) => a + c.qty, 0) > 9

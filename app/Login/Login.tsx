@@ -61,17 +61,6 @@ const Login = () => {
     >
       <h1 className="text-center text-3xl font-semibold mb-12 -4 ">Sign In</h1>
 
-      <div className="">
-        <Button
-          outline
-          icon={FaGoogle}
-          onClick={() => {
-            signIn("google");
-          }}
-          label="Continue with Google"
-        />
-      </div>
-
       <hr className="w-full bg-slate-800" />
 
       <Inputs
@@ -110,7 +99,7 @@ const Login = () => {
         />
       </div>
 
-      <Link href="/Register" className="mt-4 text-black ">
+      <Link href="/Register" className="mt-4 text-orange-700 ">
         Dont have an Account? <span className="underline">Sign Up</span>
       </Link>
     </form>

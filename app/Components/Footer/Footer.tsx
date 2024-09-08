@@ -3,35 +3,11 @@ import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import CheckroomIcon from "@mui/icons-material/Checkroom";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 
 import { MdPhoneAndroid, MdShop } from "react-icons/md";
 
 import { FaDesktop } from "react-icons/fa";
 const Footer = () => {
-  const cat = [
-    {
-      name: "All Products",
-      logo: <MdShop />,
-    },
-    {
-      name: "electronic",
-      logo: <FaDesktop />,
-    },
-    {
-      name: "clothes",
-      logo: <CheckroomIcon />,
-    },
-    {
-      name: "Phones",
-      logo: <MdPhoneAndroid />,
-    },
-    {
-      name: "shoes",
-      logo: <SportsSoccerIcon />,
-    },
-  ];
   return (
     <div className="">
       <div className="flex relative bottom-0 md:flex-row py-10 gap-4 px-4 flex-col justify-between bg-slate-800 text-white text-center items-center">

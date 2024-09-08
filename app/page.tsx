@@ -1,13 +1,10 @@
 import Banner from "./Components/Home/Banner";
 
-import CheckroomIcon from "@mui/icons-material/Checkroom";
-import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
 import ProductCard from "./Components/Home/ProductCard";
 import productService from "@/lib/services/getProduct";
 import { MdPhoneAndroid, MdShop } from "react-icons/md";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import { FaDesktop } from "react-icons/fa";
+import { FaDesktop, FaHeadset, FaShoppingBag } from "react-icons/fa";
 
 export default async function Home() {
   let all = await productService.getAllProducts();
@@ -31,7 +28,7 @@ export default async function Home() {
     },
     {
       name: "clothes",
-      logo: <CheckroomIcon />,
+      logo: <FaHeadset />,
     },
     {
       name: "Phones",
@@ -39,7 +36,7 @@ export default async function Home() {
     },
     {
       name: "shoes",
-      logo: <SportsSoccerIcon />,
+      logo: <FaShoppingBag />,
     },
   ];
   let cater = null;

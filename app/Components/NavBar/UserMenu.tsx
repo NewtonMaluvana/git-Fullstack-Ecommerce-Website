@@ -6,13 +6,10 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 import BackDrop from "./BackDrop";
-import { CurrentUser } from "@/types";
+
 import { useRouter } from "next/navigation";
 import CartService from "@/Hooks/UserCart";
 
-interface UserMenuProps {
-  currentUser: CurrentUser;
-}
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { init } = CartService();

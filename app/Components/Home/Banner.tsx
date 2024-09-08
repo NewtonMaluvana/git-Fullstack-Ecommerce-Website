@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FaShoppingBag } from "react-icons/fa";
+import img from "../../../public/images/iphone.png";
 
 const Banner = () => {
   return (
@@ -22,7 +23,7 @@ const Banner = () => {
         </div>
         <div className="md:mb-0 mb-10 w-6/12 h-[300px]">
           <Image
-            src="/iphone.png"
+            src={img}
             alt="Banner-Image"
             className="object-contain w-full h-full hover:scale-125 duration-1000"
             width={400}

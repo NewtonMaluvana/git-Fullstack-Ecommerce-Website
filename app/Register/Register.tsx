@@ -10,12 +10,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
-import { CurrentUser } from "@/types";
+
 import { error } from "console";
 
-interface LoginProps {
-  currentUser: CurrentUser;
-}
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();

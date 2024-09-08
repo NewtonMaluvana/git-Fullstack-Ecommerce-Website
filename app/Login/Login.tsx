@@ -9,11 +9,7 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import { CurrentUser } from "@/types";
 
-interface LoginProps {
-  currentUser: CurrentUser;
-}
 const Login = () => {
   const router = useRouter();
   const { data: session } = useSession();

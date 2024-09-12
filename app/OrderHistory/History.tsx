@@ -20,7 +20,12 @@ export default function MyOrders() {
   if (!mounted) return <></>;
 
   if (error) return "An error has occurred.";
-  if (!orders) return "Loading...";
+  if (!orders)
+    return (
+      <div className="flex h-full justify-center items-center py-72">
+        Loading...
+      </div>
+    );
 
   return (
     /* <th>ID</th>
@@ -41,9 +46,13 @@ export default function MyOrders() {
           </div>
           <div className="col-span-2">{order.createdAt.substring(0, 10)}</div>
           <div className="col-span-2">R {order.totalPrice}</div>
-          <div className="col-span-2 text-red-500 text-lg capitalize">
+          <div
+            className={`col-span-2 ${
+              !order.isPaid ? "text-red-500" : "text-green-700"
+            } text-lg capitalize`}
+          >
             {order.isPaid && order.paidAt
-              ? `${order.paidAt.substring(0, 10)}`
+              ? ` Paid at:${order.paidAt.substring(0, 10)}`
               : "not paid"}
           </div>
           <div className="col-span-2 capitalize">

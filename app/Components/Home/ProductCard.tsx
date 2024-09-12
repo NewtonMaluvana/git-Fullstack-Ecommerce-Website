@@ -23,7 +23,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             className="w-full h-full object-contain m-auto"
           />
         </div>
-        <div className=" p-2 text-center">
+        <div className="text-black font-semibold capitalize p-2 text-center">
           {product.name.length < 25
             ? product.name.substring(0, 25)
             : product.name.substring(0, 25) + ".."}
@@ -31,7 +31,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         <div className=" flex items-center justify-center">
           <Rating value={product.rating} readOnly />({product.numReviews})
         </div>
-        <div className="text-center p-3 text-orange-500">R {product.price}</div>
+        <div className="text-center p-3 text-blue-600">R {product.price}</div>
       </div>
     </div>
   );

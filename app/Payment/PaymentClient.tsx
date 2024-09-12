@@ -39,7 +39,7 @@ const PaymentClient = () => {
         <h1 className="text-center text-4xl text-purple-600">Payment Method</h1>
 
         <form className="" onSubmit={handleSubmit}>
-          {["Stripe", "PayPal", "Cash On Delivery(COD)"].map((payment) => (
+          {["PayPal", "Cash On Delivery(COD)"].map((payment) => (
             <div key={payment} className="">
               <label className="m-2 flex justify-between cursor-pointer">
                 <span className="text-white text-2xl flex   text-wrap">

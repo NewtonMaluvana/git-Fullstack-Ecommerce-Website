@@ -15,6 +15,7 @@ import { error } from "console";
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isERROR, setError] = useState(false);
   const { data: session } = useSession();
   const Sparams = useSearchParams();
   const callbackUrl = Sparams?.get("callbackUrl") || "/";
@@ -64,7 +65,7 @@ const Register = () => {
         throw new Error(da.message);
       }
     } catch (error: any) {
-      toast.error(error.message || "error ");
+      setError(true);
     }
   };
   if (session && session.user) {
@@ -106,7 +107,11 @@ const Register = () => {
         errors={errors}
         required
       />
-
+      {isERROR && (
+        <div className="text-red-600 text-center">
+          User with that email already exist
+        </div>
+      )}
       <div className="w-9/12">
         <Button
           label={isLoading ? "Loading" : "Sign Up"}
